@@ -13,7 +13,7 @@ description: >
 version: 1.0.0
 metadata:
   emoji: 🌐
-  homepage: https://github.com/shahaamirbader/openclaw-agent-browser
+  homepage: https://github.com/shahaamirbader/agent-browser-openclaw
   install:
     node: openclaw-agent-browser
   requires:
@@ -31,7 +31,7 @@ npm install -g openclaw-agent-browser
 agent-browser-openclaw install   # downloads Chrome for Testing (first time only)
 ```
 
-Full source: https://github.com/shahaamirbader/openclaw-agent-browser
+Full source: https://github.com/shahaamirbader/agent-browser-openclaw
 
 ---
 

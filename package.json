@@ -38,12 +38,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shahaamirbader/openclaw-agent-browser.git"
+    "url": "git+https://github.com/shahaamirbader/agent-browser-openclaw.git"
   },
   "bugs": {
-    "url": "https://github.com/shahaamirbader/openclaw-agent-browser/issues"
+    "url": "https://github.com/shahaamirbader/agent-browser-openclaw/issues"
   },
-  "homepage": "https://github.com/shahaamirbader/openclaw-agent-browser#readme",
+  "homepage": "https://github.com/shahaamirbader/agent-browser-openclaw#readme",
   "devDependencies": {
     "@changesets/cli": "^2.29.8"
   }

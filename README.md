@@ -94,7 +94,7 @@ Then use via `package.json` scripts or by invoking `agent-browser-openclaw` dire
 ### From Source
 
 ```bash
-git clone https://github.com/shahaamirbader/openclaw-agent-browser
+git clone https://github.com/shahaamirbader/agent-browser-openclaw
 cd openclaw-agent-browser
 pnpm install
 pnpm build
