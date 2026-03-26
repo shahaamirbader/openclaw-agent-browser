@@ -17,8 +17,8 @@ metadata:
   install:
     node: openclaw-agent-browser
   requires:
-    bins: [ocbrowser]
-allowed-tools: Bash(npx openclaw-agent-browser:*), Bash(ocbrowser:*)
+    bins: [agent-browser-openclaw]
+allowed-tools: Bash(npx openclaw-agent-browser:*), Bash(agent-browser-openclaw:*)
 ---
 
 # Browser Automation with openclaw-agent-browser
@@ -28,7 +28,7 @@ with added features for Openclaw AI agent workflows. Install via:
 
 ```bash
 npm install -g openclaw-agent-browser
-ocbrowser install   # downloads Chrome for Testing (first time only)
+agent-browser-openclaw install   # downloads Chrome for Testing (first time only)
 ```
 
 Full source: https://github.com/shahaamirbader/openclaw-agent-browser
@@ -39,21 +39,21 @@ Full source: https://github.com/shahaamirbader/openclaw-agent-browser
 
 Every browser session follows this pattern:
 
-1. **Navigate** — `ocbrowser open <url>`
-2. **Snapshot** — `ocbrowser snapshot -i` (get element refs like `@e1`, `@e2`)
+1. **Navigate** — `agent-browser-openclaw open <url>`
+2. **Snapshot** — `agent-browser-openclaw snapshot -i` (get element refs like `@e1`, `@e2`)
 3. **Interact** — use refs to click, fill, select
 4. **Re-snapshot** — after navigation or DOM changes, get fresh refs
 
 ```bash
-ocbrowser open https://example.com/login
-ocbrowser snapshot -i
+agent-browser-openclaw open https://example.com/login
+agent-browser-openclaw snapshot -i
 # @e1 [input type="email"], @e2 [input type="password"], @e3 [button] "Sign In"
 
-ocbrowser fill @e1 "user@example.com"
-ocbrowser fill @e2 "secret"
-ocbrowser click @e3
-ocbrowser wait --load networkidle
-ocbrowser snapshot -i
+agent-browser-openclaw fill @e1 "user@example.com"
+agent-browser-openclaw fill @e2 "secret"
+agent-browser-openclaw click @e3
+agent-browser-openclaw wait --load networkidle
+agent-browser-openclaw snapshot -i
 ```
 
 ---
@@ -67,10 +67,10 @@ displayed inline in a chat UI without filesystem access.
 
 ```bash
 # CLI flag
-ocbrowser screenshot --return-base64
+agent-browser-openclaw screenshot --return-base64
 
 # JSON daemon API
-echo '{"action":"screenshot","returnBase64":true}' | ocbrowser batch --json
+echo '{"action":"screenshot","returnBase64":true}' | agent-browser-openclaw batch --json
 ```
 
 Response includes `{ "path": "...", "base64": "iVBORw0KGgo..." }`.
@@ -84,8 +84,8 @@ crosshair at the exact pixel the action landed. Use this to visually confirm
 the AI interacted with the right element.
 
 ```bash
-ocbrowser click @e3
-ocbrowser screenshot --cursor --return-base64
+agent-browser-openclaw click @e3
+agent-browser-openclaw screenshot --cursor --return-base64
 ```
 
 JSON API: `{ "action": "screenshot", "cursor": true, "returnBase64": true }`
@@ -100,7 +100,7 @@ AI agent needs the full picture of where it is.
 
 ```bash
 # JSON daemon API
-echo '{"action":"page-state"}' | ocbrowser batch --json
+echo '{"action":"page-state"}' | agent-browser-openclaw batch --json
 ```
 
 Response:
@@ -125,10 +125,10 @@ field names and current values, or after filling to verify accuracy.
 
 ```bash
 # All fields on the page
-echo '{"action":"form-state"}' | ocbrowser batch --json
+echo '{"action":"form-state"}' | agent-browser-openclaw batch --json
 
 # Scoped to a specific form element
-echo '{"action":"form-state","selector":"form#checkout"}' | ocbrowser batch --json
+echo '{"action":"form-state","selector":"form#checkout"}' | agent-browser-openclaw batch --json
 ```
 
 Response:
@@ -155,13 +155,13 @@ HTTP request tracking is blind to live data.
 
 ```bash
 # Enable capture and list recent messages
-echo '{"action":"websocket-messages"}' | ocbrowser batch --json
+echo '{"action":"websocket-messages"}' | agent-browser-openclaw batch --json
 
 # Filter by direction, limit results
-echo '{"action":"websocket-messages","direction":"received","limit":20}' | ocbrowser batch --json
+echo '{"action":"websocket-messages","direction":"received","limit":20}' | agent-browser-openclaw batch --json
 
 # Clear the buffer
-echo '{"action":"websocket-clear"}' | ocbrowser batch --json
+echo '{"action":"websocket-clear"}' | agent-browser-openclaw batch --json
 ```
 
 Response:
@@ -189,80 +189,80 @@ and runs until the browser is closed.
 
 ### Navigation
 ```bash
-ocbrowser open <url>          # Navigate (aliases: goto, navigate)
-ocbrowser back                # Browser back
-ocbrowser forward             # Browser forward
-ocbrowser reload              # Reload page
-ocbrowser get url             # Current URL
-ocbrowser get title           # Page title
-ocbrowser close               # Close browser
+agent-browser-openclaw open <url>          # Navigate (aliases: goto, navigate)
+agent-browser-openclaw back                # Browser back
+agent-browser-openclaw forward             # Browser forward
+agent-browser-openclaw reload              # Reload page
+agent-browser-openclaw get url             # Current URL
+agent-browser-openclaw get title           # Page title
+agent-browser-openclaw close               # Close browser
 ```
 
 ### Snapshots & Screenshots
 ```bash
-ocbrowser snapshot            # Accessibility tree
-ocbrowser snapshot -i         # Interactive elements only (best for AI)
-ocbrowser screenshot [path]   # Screenshot (--full for full page)
-ocbrowser screenshot --annotate          # Numbered element labels
-ocbrowser screenshot --return-base64     # Include base64 in response
-ocbrowser screenshot --cursor           # Draw crosshair at last action
+agent-browser-openclaw snapshot            # Accessibility tree
+agent-browser-openclaw snapshot -i         # Interactive elements only (best for AI)
+agent-browser-openclaw screenshot [path]   # Screenshot (--full for full page)
+agent-browser-openclaw screenshot --annotate          # Numbered element labels
+agent-browser-openclaw screenshot --return-base64     # Include base64 in response
+agent-browser-openclaw screenshot --cursor           # Draw crosshair at last action
 ```
 
 ### Interaction
 ```bash
-ocbrowser click <sel>         # Click element
-ocbrowser fill <sel> <text>   # Clear and fill
-ocbrowser type <sel> <text>   # Type (appends)
-ocbrowser press <key>         # Key press (e.g. Enter, Tab, Control+a)
-ocbrowser hover <sel>         # Hover element
-ocbrowser select <sel> <val>  # Select dropdown
-ocbrowser check <sel>         # Check checkbox
-ocbrowser drag <src> <tgt>    # Drag and drop
-ocbrowser upload <sel> <file> # File upload
-ocbrowser scroll <dir> [px]   # Scroll up/down/left/right
+agent-browser-openclaw click <sel>         # Click element
+agent-browser-openclaw fill <sel> <text>   # Clear and fill
+agent-browser-openclaw type <sel> <text>   # Type (appends)
+agent-browser-openclaw press <key>         # Key press (e.g. Enter, Tab, Control+a)
+agent-browser-openclaw hover <sel>         # Hover element
+agent-browser-openclaw select <sel> <val>  # Select dropdown
+agent-browser-openclaw check <sel>         # Check checkbox
+agent-browser-openclaw drag <src> <tgt>    # Drag and drop
+agent-browser-openclaw upload <sel> <file> # File upload
+agent-browser-openclaw scroll <dir> [px]   # Scroll up/down/left/right
 ```
 
 ### Semantic Locators (preferred over CSS selectors)
 ```bash
-ocbrowser find role button click --name "Submit"
-ocbrowser find text "Sign In" click
-ocbrowser find label "Email" fill "me@example.com"
-ocbrowser find placeholder "Search..." fill "query"
+agent-browser-openclaw find role button click --name "Submit"
+agent-browser-openclaw find text "Sign In" click
+agent-browser-openclaw find label "Email" fill "me@example.com"
+agent-browser-openclaw find placeholder "Search..." fill "query"
 ```
 
 ### Wait
 ```bash
-ocbrowser wait <selector>              # Wait for element
-ocbrowser wait --text "Welcome"        # Wait for text
-ocbrowser wait --url "**/dashboard"    # Wait for URL pattern
-ocbrowser wait --load networkidle      # Wait for network idle
-ocbrowser wait --fn "window.ready"     # Wait for JS condition
+agent-browser-openclaw wait <selector>              # Wait for element
+agent-browser-openclaw wait --text "Welcome"        # Wait for text
+agent-browser-openclaw wait --url "**/dashboard"    # Wait for URL pattern
+agent-browser-openclaw wait --load networkidle      # Wait for network idle
+agent-browser-openclaw wait --fn "window.ready"     # Wait for JS condition
 ```
 
 ### Get Info
 ```bash
-ocbrowser get text <sel>      # Text content
-ocbrowser get value <sel>     # Input value
-ocbrowser get attr <sel> <a>  # Attribute
-ocbrowser get count <sel>     # Count matches
-ocbrowser get box <sel>       # Bounding box
+agent-browser-openclaw get text <sel>      # Text content
+agent-browser-openclaw get value <sel>     # Input value
+agent-browser-openclaw get attr <sel> <a>  # Attribute
+agent-browser-openclaw get count <sel>     # Count matches
+agent-browser-openclaw get box <sel>       # Bounding box
 ```
 
 ### Network & State
 ```bash
-ocbrowser requests            # List HTTP requests
-ocbrowser route <pattern> --mock-status 200 --mock-body '{"ok":true}'
-ocbrowser cookies get
-ocbrowser storage get local <key>
-ocbrowser state save ./auth.json
-ocbrowser state load ./auth.json
+agent-browser-openclaw requests            # List HTTP requests
+agent-browser-openclaw route <pattern> --mock-status 200 --mock-body '{"ok":true}'
+agent-browser-openclaw cookies get
+agent-browser-openclaw storage get local <key>
+agent-browser-openclaw state save ./auth.json
+agent-browser-openclaw state load ./auth.json
 ```
 
 ### Auth
 ```bash
-ocbrowser --auto-connect state save ./auth.json   # Import from running Chrome
-ocbrowser --profile ~/.myapp open <url>           # Persistent profile
-ocbrowser --session-name myapp open <url>         # Named session
+agent-browser-openclaw --auto-connect state save ./auth.json   # Import from running Chrome
+agent-browser-openclaw --profile ~/.myapp open <url>           # Persistent profile
+agent-browser-openclaw --session-name myapp open <url>         # Named session
 ```
 
 ---
@@ -270,15 +270,15 @@ ocbrowser --session-name myapp open <url>         # Named session
 ## Handling Dialogs & Popups
 
 ```bash
-ocbrowser dialog status        # Check for pending alert/confirm/prompt
-ocbrowser dialog accept        # Accept dialog
-ocbrowser dialog accept "text" # Accept prompt with input text
-ocbrowser dialog dismiss       # Dismiss/cancel dialog
+agent-browser-openclaw dialog status        # Check for pending alert/confirm/prompt
+agent-browser-openclaw dialog accept        # Accept dialog
+agent-browser-openclaw dialog accept "text" # Accept prompt with input text
+agent-browser-openclaw dialog dismiss       # Dismiss/cancel dialog
 ```
 
 HTTP Basic Auth is handled automatically via env vars:
 ```bash
-AGENT_BROWSER_PROXY_USERNAME=user AGENT_BROWSER_PROXY_PASSWORD=pass ocbrowser open <url>
+AGENT_BROWSER_PROXY_USERNAME=user AGENT_BROWSER_PROXY_PASSWORD=pass agent-browser-openclaw open <url>
 ```
 
 ---
