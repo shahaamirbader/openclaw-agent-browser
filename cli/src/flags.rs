@@ -313,6 +313,10 @@ pub struct Flags {
     pub cli_annotate: bool,
     pub cli_download_path: bool,
     pub cli_headed: bool,
+    /// --return-base64: include base64-encoded image in screenshot response
+    pub return_base64: bool,
+    /// --cursor: draw crosshair at last click/hover position on screenshot
+    pub screenshot_cursor: bool,
 }
 
 pub fn parse_flags(args: &[String]) -> Flags {
@@ -441,6 +445,8 @@ pub fn parse_flags(args: &[String]) -> Flags {
         cli_annotate: false,
         cli_download_path: false,
         cli_headed: false,
+        return_base64: false,
+        screenshot_cursor: false,
     };
 
     let mut i = 0;
@@ -702,6 +708,12 @@ pub fn parse_flags(args: &[String]) -> Flags {
                     }
                     i += 1;
                 }
+            }
+            "--return-base64" => {
+                flags.return_base64 = true;
+            }
+            "--cursor" => {
+                flags.screenshot_cursor = true;
             }
             "--config" => {
                 // Already handled by load_config(); skip the value

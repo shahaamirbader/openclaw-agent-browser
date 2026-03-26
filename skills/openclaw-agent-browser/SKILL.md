@@ -27,7 +27,7 @@ A fork of [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-brows
 with added features for Openclaw AI agent workflows. Install via:
 
 ```bash
-npm install -g openclaw-agent-browser
+npm install -g github:shahaamirbader/agent-browser-openclaw
 agent-browser-openclaw install   # downloads Chrome for Testing (first time only)
 ```
 
@@ -99,8 +99,9 @@ screenshot all in a single round trip. Avoids 3–4 separate commands when an
 AI agent needs the full picture of where it is.
 
 ```bash
-# JSON daemon API
-echo '{"action":"page-state"}' | agent-browser-openclaw batch --json
+agent-browser-openclaw page-state
+agent-browser-openclaw page-state --interactive   # include element refs in snapshot
+agent-browser-openclaw page-state --compact       # compact snapshot format
 ```
 
 Response:
@@ -113,8 +114,6 @@ Response:
 }
 ```
 
-Optional params: `interactive` (bool), `compact` (bool).
-
 ---
 
 ### 4. Form state extraction
@@ -125,10 +124,10 @@ field names and current values, or after filling to verify accuracy.
 
 ```bash
 # All fields on the page
-echo '{"action":"form-state"}' | agent-browser-openclaw batch --json
+agent-browser-openclaw form-state
 
 # Scoped to a specific form element
-echo '{"action":"form-state","selector":"form#checkout"}' | agent-browser-openclaw batch --json
+agent-browser-openclaw form-state --selector "form#checkout"
 ```
 
 Response:
@@ -155,13 +154,13 @@ HTTP request tracking is blind to live data.
 
 ```bash
 # Enable capture and list recent messages
-echo '{"action":"websocket-messages"}' | agent-browser-openclaw batch --json
+agent-browser-openclaw websocket-messages
 
 # Filter by direction, limit results
-echo '{"action":"websocket-messages","direction":"received","limit":20}' | agent-browser-openclaw batch --json
+agent-browser-openclaw websocket-messages --direction received --limit 20
 
 # Clear the buffer
-echo '{"action":"websocket-clear"}' | agent-browser-openclaw batch --json
+agent-browser-openclaw websocket-clear
 ```
 
 Response:

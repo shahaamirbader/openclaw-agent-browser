@@ -509,6 +509,12 @@ pub fn parse_command(args: &[String], flags: &Flags) -> Result<Value, ParseError
             if let Some(ref dir) = flags.screenshot_dir {
                 cmd["screenshotDir"] = json!(dir);
             }
+            if flags.return_base64 {
+                cmd["returnBase64"] = json!(true);
+            }
+            if flags.screenshot_cursor {
+                cmd["cursor"] = json!(true);
+            }
             Ok(cmd)
         }
         "pdf" => {
@@ -604,6 +610,70 @@ pub fn parse_command(args: &[String], flags: &Flags) -> Result<Value, ParseError
 
         // === Inspect ===
         "inspect" => Ok(json!({ "id": id, "action": "inspect" })),
+
+        // === Page State (url + title + snapshot + screenshot in one call) ===
+        "page-state" => {
+            let mut cmd = json!({ "id": id, "action": "page-state" });
+            let mut i = 0;
+            while i < rest.len() {
+                match rest[i].as_ref() {
+                    "--interactive" | "-i" => { cmd["interactive"] = json!(true); }
+                    "--compact" => { cmd["compact"] = json!(true); }
+                    _ => {}
+                }
+                i += 1;
+            }
+            Ok(cmd)
+        }
+
+        // === Form State ===
+        "form-state" => {
+            let mut cmd = json!({ "id": id, "action": "form-state" });
+            let mut i = 0;
+            while i < rest.len() {
+                match rest[i].as_ref() {
+                    "--selector" => {
+                        if let Some(sel) = rest.get(i + 1) {
+                            cmd["selector"] = json!(sel);
+                            i += 1;
+                        }
+                    }
+                    _ => {}
+                }
+                i += 1;
+            }
+            Ok(cmd)
+        }
+
+        // === WebSocket Messages ===
+        "websocket-messages" => {
+            let mut cmd = json!({ "id": id, "action": "websocket-messages" });
+            let mut i = 0;
+            while i < rest.len() {
+                match rest[i].as_ref() {
+                    "--direction" => {
+                        if let Some(dir) = rest.get(i + 1) {
+                            cmd["direction"] = json!(dir);
+                            i += 1;
+                        }
+                    }
+                    "--limit" => {
+                        if let Some(lim) = rest.get(i + 1) {
+                            if let Ok(n) = lim.parse::<u64>() {
+                                cmd["limit"] = json!(n);
+                            }
+                            i += 1;
+                        }
+                    }
+                    _ => {}
+                }
+                i += 1;
+            }
+            Ok(cmd)
+        }
+
+        // === WebSocket Clear ===
+        "websocket-clear" => Ok(json!({ "id": id, "action": "websocket-clear" })),
 
         // === Authentication Vault ===
         "auth" => {

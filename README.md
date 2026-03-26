@@ -76,16 +76,18 @@ Capture and inspect WebSocket frames sent and received by the page. Essential fo
 Installs the native Rust binary and registers the `agent-browser-openclaw` command:
 
 ```bash
-npm install -g openclaw-agent-browser
+npm install -g github:shahaamirbader/agent-browser-openclaw
 agent-browser-openclaw install  # Download Chrome from Chrome for Testing (first time only)
 ```
+
+> **Note:** This package is not yet published to the npm registry. Install directly from GitHub as shown above.
 
 ### Project Installation (local dependency)
 
 For projects that want to pin the version in `package.json`:
 
 ```bash
-npm install openclaw-agent-browser
+npm install github:shahaamirbader/agent-browser-openclaw
 agent-browser-openclaw install
 ```
 
