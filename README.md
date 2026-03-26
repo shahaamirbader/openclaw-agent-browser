@@ -73,11 +73,11 @@ Capture and inspect WebSocket frames sent and received by the page. Essential fo
 
 ### Global Installation (recommended)
 
-Installs the native Rust binary:
+Installs the native Rust binary and registers the `ocbrowser` command:
 
 ```bash
-npm install -g agent-browser
-agent-browser install  # Download Chrome from Chrome for Testing (first time only)
+npm install -g openclaw-agent-browser
+ocbrowser install  # Download Chrome from Chrome for Testing (first time only)
 ```
 
 ### Project Installation (local dependency)
@@ -85,31 +85,17 @@ agent-browser install  # Download Chrome from Chrome for Testing (first time onl
 For projects that want to pin the version in `package.json`:
 
 ```bash
-npm install agent-browser
-agent-browser install
+npm install openclaw-agent-browser
+ocbrowser install
 ```
 
-Then use via `package.json` scripts or by invoking `agent-browser` directly.
-
-### Homebrew (macOS)
-
-```bash
-brew install agent-browser
-agent-browser install  # Download Chrome from Chrome for Testing (first time only)
-```
-
-### Cargo (Rust)
-
-```bash
-cargo install agent-browser
-agent-browser install  # Download Chrome from Chrome for Testing (first time only)
-```
+Then use via `package.json` scripts or by invoking `ocbrowser` directly.
 
 ### From Source
 
 ```bash
-git clone https://github.com/vercel-labs/agent-browser
-cd agent-browser
+git clone https://github.com/shahaamirbader/openclaw-agent-browser
+cd openclaw-agent-browser
 pnpm install
 pnpm build
 pnpm build:native   # Requires Rust (https://rustup.rs)
